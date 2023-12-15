@@ -26,4 +26,4 @@ jobs:
 
       - name: Run CLI
         run: |
-          java -cp "./bin:./lib/*" CodeRankingLeaderboardCLI.Main "Test_Data/CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data/HackerRankTests.txt"
+          java -cp "./bin:./lib/*" CodeRankingLeaderboardCLI "Test_Data/CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data/HackerRankTests.txt"
