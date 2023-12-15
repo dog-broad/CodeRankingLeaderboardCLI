@@ -22,8 +22,8 @@ jobs:
           
       - name: Compile Project
         run: |
-          javac -d bin -cp "./CodeRankingLeaderboardCLI/lib/*" -Xlint:deprecation ./CodeRankingLeaderboardCLI/src/CodeRankingLeaderboardCLI.java
+          javac -d bin -cp "./lib/*" -Xlint:deprecation ./src/CodeRankingLeaderboardCLI.java
 
       - name: Run CLI
         run: |
-          java -cp "./bin:./CodeRankingLeaderboardCLI/lib/*" CodeRankingLeaderboardCLI.Main "Test_Data/CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data/HackerRankTests.txt"
+          java -cp "./bin:./lib/*" CodeRankingLeaderboardCLI.Main "Test_Data/CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data/HackerRankTests.txt"
