@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: 'oracle' # Use 'adopt' distribution on Windows
+          distribution: 'adopt' # Use 'adopt' distribution on Windows
           architecture: x64
           
       - name: Compile Project
