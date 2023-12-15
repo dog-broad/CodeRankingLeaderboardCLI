@@ -1,0 +1,29 @@
+name: Test Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0,12 * * *' # Runs at 12 am and 12 pm UTC time
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set up JDK 21
+        uses: setup-java@v4.0.0
+        with:
+          java-version: '21'
+          
+      - name: Compile Project
+        run: |
+          javac -d bin -cp ".\CodeRankingLeaderboardCLI\lib*" -Xlint:deprecation .\CodeRankingLeaderboardCLI\src\CodeRankingLeaderboardCLI.java
+
+      - name: Run CLI
+        run: |
+          java -cp ".\bin;.\CodeRankingLeaderboardCLI\lib\*;.\CodeRankingLeaderboardCLI\lib\*" CodeRankingLeaderboardCLI.Main "Test_Data\CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data\HackerRankTests.txt"
+
+
+      
+      
+
