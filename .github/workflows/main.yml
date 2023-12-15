@@ -14,19 +14,14 @@ jobs:
         uses: actions/checkout@v4.1.1
           
       - name: Set up JDK 21
-        uses: setup-java@v4.0.0
+        uses: actions/setup-java@v2
         with:
           java-version: '21'
           
       - name: Compile Project
         run: |
-          javac -d bin -cp ".\CodeRankingLeaderboardCLI\lib*" -Xlint:deprecation .\CodeRankingLeaderboardCLI\src\CodeRankingLeaderboardCLI.java
+          javac -d bin -cp "./CodeRankingLeaderboardCLI/lib/*" -Xlint:deprecation ./CodeRankingLeaderboardCLI/src/CodeRankingLeaderboardCLI.java
 
       - name: Run CLI
         run: |
-          java -cp ".\bin;.\CodeRankingLeaderboardCLI\lib\*;.\CodeRankingLeaderboardCLI\lib\*" CodeRankingLeaderboardCLI.Main "Test_Data\CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data\HackerRankTests.txt"
-
-
-      
-      
-
+          java -cp "./bin:./CodeRankingLeaderboardCLI/lib/*" CodeRankingLeaderboardCLI.Main "Test_Data/CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "Test_Data/HackerRankTests.txt"
