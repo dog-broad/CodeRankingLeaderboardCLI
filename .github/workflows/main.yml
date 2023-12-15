@@ -13,6 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4.1.1
           
+      - name: Download CSV File
+        run: wget -O Test_Data/"CODING PLATFORMS USERNAME LIST - 2025 batch.csv" "https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTuq5uvNpRnEXxfwPUOgSWhFZPs_0BQZV6HnV-HIqh2tovJTHVWT_moXoOTl-uejmY_bgREOaqMZ27-/pub?output=csv&gid=1214357857&single=true"
+
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
@@ -35,7 +38,7 @@ jobs:
       - name: Archive Generated File
         run: |
           mkdir -p ${{ github.workspace }}/LeaderboardsStorage
-          mv Leaderboards/* ${{ github.workspace }}/LeaderboardsStorage
+          mv -f Leaderboards/* ${{ github.workspace }}/LeaderboardsStorage
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4.0.0
