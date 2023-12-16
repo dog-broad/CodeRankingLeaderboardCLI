@@ -266,7 +266,7 @@ public class CodeRankingLeaderboardCLI {
                                 } catch(Exception t) {}
                             }
                             catch(ArithmeticException e){
-                                JOptionPane.showMessageDialog(null, tracker_name+" is invalid. Ignoring...", "Error", JOptionPane.ERROR_MESSAGE);
+                                System.out.println(tracker_name+" is invalid. Ignoring...");
                                 break;
                             }
                             catch(Exception pp) {}
@@ -275,7 +275,7 @@ public class CodeRankingLeaderboardCLI {
                 }catch(Exception ee){}
             }
             System.out.println();
-            System.out.println("========================================");
+            System.out.println("\n\n========================================");
             System.out.println("Setting overall coding scores...");
             System.out.print("========================================");
             int n = list.size();
@@ -436,7 +436,7 @@ public class CodeRankingLeaderboardCLI {
             System.out.println(p.getHandle() + " " + p.getPercentile());
             return percentile;
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Something went wrong!");
             return 0;
         }
     }
@@ -455,7 +455,50 @@ public class CodeRankingLeaderboardCLI {
                 leaderboard.get(i).setRank(i + 1);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Something went wrong!");
+        }
+    }
+
+    static void writeCSV(ArrayList<CodeRankingLeaderboardCLI.Participant> participants) {
+        String csvFile = "Leaderboards/CurrentCodeRankingLeaderboard.csv";
+
+        try (FileWriter writer = new FileWriter(csvFile)) {
+            // Write CSV header
+            writer.append("Rank,Handle,Codeforces_Handle,Codeforces_Rating,GFG_Handle,GFG_Contest_Score,GFG_Practice_Score," +
+                    "Leetcode_Handle,Leetcode_Rating,Codechef_Handle,Codechef_Rating");
+
+            if (CodeRankingLeaderboardCLI.hackerrankchk) {
+                writer.append(",HackerRank_Handle,HackerRank_Practice_Score");
+            }
+            writer.append(",Percentile\n");
+
+            // Write data
+            for (CodeRankingLeaderboardCLI.Participant participant : participants) {
+                writer.append(String.join(",",
+                        String.valueOf(participant.getRank()),
+                        participant.getHandle(),
+                        participant.getCodeforcesHandle(),
+                        String.valueOf(participant.getCodeforcesRating()),
+                        participant.getGeeksForGeeksHandle(),
+                        String.valueOf(participant.getGeeksForGeeksScore()),
+                        String.valueOf(participant.getGeeksForGeekspScore()),
+                        participant.getLeetcodeHandle(),
+                        String.valueOf(participant.getLeetcodeRating()),
+                        participant.getCodeChefHandle(),
+                        String.valueOf(participant.getCodeChefRating())
+                ));
+
+                if (CodeRankingLeaderboardCLI.hackerrankchk) {
+                    writer.append(",").append(participant.getHackerrankHandle()).append(",").append(String.valueOf(participant.getHackerrankScore()));
+                }
+
+                writer.append(",").append(String.format("%.2f%%", participant.getPercentile())).append("\n");
+            }
+
+            System.out.println("CSV file created successfully!");
+            System.out.println("File Path: " + csvFile);
+        } catch (IOException e) {
+            System.out.println("Error writing CSV file: " + e.getMessage());
         }
     }
 
@@ -665,16 +708,19 @@ public class CodeRankingLeaderboardCLI {
                 System.out.println("Excel file created successfully!");
                 System.out.println("File Path: " + file.getAbsolutePath());
 
+                // call csv creation function
+                writeCSV(participants);
+
                 // Close the application gracefully
                 System.exit(0);
 
                 workbook.close();
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Something Went Wrong! ", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Something Went Wrong! ");
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Something Went Wrong!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Something Went Wrong!");
         }
     }
 
