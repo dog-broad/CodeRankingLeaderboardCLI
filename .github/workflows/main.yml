@@ -3,7 +3,7 @@ name: CodeRankingWorkflow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0,12 * * *' # Runs at 12 am and 12 pm UTC time
+    - cron: '0 0,12 * * *' # Runs at 12 am and 12 pm UTC time, 5:30 AM and PM respectively
 
 jobs:
   build:
